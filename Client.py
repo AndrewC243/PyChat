@@ -5,7 +5,8 @@ SERVER_IP = input("What is the IP of your chat server?")
 
 try:
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect(SERVER_IP, 9999)
+    clientSocket.bind(("0.0.0.0", 9999))
+    clientSocket.connect((SERVER_IP, 9999))
 except Exception as e:
     print("Exception occurred:", e)
     clientSocket.close()
@@ -19,7 +20,7 @@ def sendMsg ():
             if msg == "exit()":
                 clientSocket.close()
                 break
-            clientSocket.send(msg.encode('ascii'))
+            clientSocket.send("<",  msg.encode('ascii'))
             print("Message sent!")
     except Exception as e:
         print("Connection closed or interrupted.")
